@@ -1,25 +1,35 @@
-setwd("./")
+################################################################
+# Test caching for matrix inverse
+
+# setwd("")
 rm(list = ls())
 
 source("cachematrix.R")
 
-# v <- matrix(1:4, 2, 2)
-v <- matrix(sample(10, 100, replace = TRUE), 10, 10)
-v
+# mx <- matrix(1:4, 2, 2)
+mx <- matrix(sample(10, 100, replace = TRUE), 10, 10)
+mx
 
-v1 <- makeCacheMatrix(v)
+mx.1 <- makeCacheMatrix(mx)
 
-v_inv <- cacheSolve(v1)
-v_inv
+mx.inv <- cacheSolve(mx.1)
+mx.inv
 
-round((v %*% v_inv),3)
+round((mx %*% mx.inv),3)
 
-v1
-ls(environment(v1$getinverse))
-get("x", environment(v1$getinverse))
-get("inv", environment(v1$getinverse))
+mx1
+ls(environment(mx.1$getinverse))
+get("x", environment(mx.1$getinverse))
+get("inv", environment(mx.1$getinverse))
+
+
+
 
 ##################################################################
+# Test caching for vector mean
+
+rm(list = ls())
+
 
 source("cachevector.R")
 
@@ -47,6 +57,8 @@ get("m", environment(a$get))
 
 
 ##################################################################
+# Another caching example: counter
+
 
 createCounter <- function(x) { function(i) { value <<- value+i} }
 
